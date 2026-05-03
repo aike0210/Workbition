@@ -91,18 +91,21 @@ const TaskCard = ({ task, isDragging, onClick, onStatusChange }: TaskCardProps) 
         </Text>
 
         {/* Tags */}
-        {task.tags && task.tags.length > 0 && (
-          <div style={{ marginBottom: 8 }}>
-            {task.tags.slice(0, 3).map((tag) => (
-              <Tag key={tag} style={{ fontSize: 11 }}>
-                {tag}
-              </Tag>
-            ))}
-            {task.tags.length > 3 && (
-              <Tag style={{ fontSize: 11 }}>+{task.tags.length - 3}</Tag>
-            )}
-          </div>
-        )}
+        {task.tags && (() => {
+          const tagList = typeof task.tags === 'string' ? (() => { try { return JSON.parse(task.tags) } catch { return [] } })() : task.tags
+          return tagList.length > 0 ? (
+            <div style={{ marginBottom: 8 }}>
+              {tagList.slice(0, 3).map((tag: string) => (
+                <Tag key={tag} style={{ fontSize: 11 }}>
+                  {tag}
+                </Tag>
+              ))}
+              {tagList.length > 3 && (
+                <Tag style={{ fontSize: 11 }}>+{tagList.length - 3}</Tag>
+              )}
+            </div>
+          ) : null
+        })()}
 
         {/* Footer */}
         <div
@@ -164,11 +167,11 @@ const TaskCard = ({ task, isDragging, onClick, onStatusChange }: TaskCardProps) 
           </Space>
 
           {/* Assignee */}
-          {task.assignee ? (
-            <Tooltip title={task.assignee.nickname || task.assignee.username}>
+          {task.assigneeName ? (
+            <Tooltip title={task.assigneeName}>
               <Avatar
                 size="small"
-                src={task.assignee.avatar}
+                src={task.assigneeAvatar}
                 icon={<UserOutlined />}
               />
             </Tooltip>

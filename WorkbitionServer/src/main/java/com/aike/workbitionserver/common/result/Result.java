@@ -1,19 +1,14 @@
 package com.aike.workbitionserver.common.result;
 
-import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.Data;
 
 @Data
-@Schema(description = "统一响应体")
 public class Result<T> {
 
-    @Schema(description = "状态码", example = "200")
     private int code;
 
-    @Schema(description = "消息", example = "操作成功")
     private String message;
 
-    @Schema(description = "数据")
     private T data;
 
     private Result() {}

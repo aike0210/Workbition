@@ -1,14 +1,14 @@
 import apiClient from './axios'
-import { ApiResponse, AuthResponse, LoginRequest, RegisterRequest, User } from '@/types'
+import { ApiResponse, TokenResponse, LoginRequest, RegisterRequest, User } from '@/types'
 
 export const authApi = {
-  login: async (data: LoginRequest): Promise<AuthResponse> => {
-    const response = await apiClient.post<ApiResponse<AuthResponse>>('/auth/login', data)
+  login: async (data: LoginRequest): Promise<TokenResponse> => {
+    const response = await apiClient.post<ApiResponse<TokenResponse>>('/auth/login', data)
     return response.data.data
   },
 
-  register: async (data: RegisterRequest): Promise<AuthResponse> => {
-    const response = await apiClient.post<ApiResponse<AuthResponse>>('/auth/register', data)
+  register: async (data: RegisterRequest): Promise<User> => {
+    const response = await apiClient.post<ApiResponse<User>>('/auth/register', data)
     return response.data.data
   },
 
@@ -16,8 +16,8 @@ export const authApi = {
     await apiClient.post('/auth/logout')
   },
 
-  refreshToken: async (refreshToken: string): Promise<{ token: string }> => {
-    const response = await apiClient.post<ApiResponse<{ token: string }>>('/auth/refresh', {
+  refreshToken: async (refreshToken: string): Promise<TokenResponse> => {
+    const response = await apiClient.post<ApiResponse<TokenResponse>>('/auth/refresh', {
       refreshToken,
     })
     return response.data.data

@@ -11,6 +11,7 @@ import {
   LogoutOutlined,
   MenuFoldOutlined,
   MenuUnfoldOutlined,
+  AuditOutlined,
 } from '@ant-design/icons'
 import { useAuthStore } from '@/stores/authStore'
 
@@ -38,6 +39,11 @@ const MainLayout = () => {
       key: '/organizations',
       icon: <TeamOutlined />,
       label: '组织',
+    },
+    {
+      key: '/approvals',
+      icon: <AuditOutlined />,
+      label: '审批',
     },
     {
       key: '/settings',
@@ -77,6 +83,7 @@ const MainLayout = () => {
     const path = location.pathname
     if (path.startsWith('/projects')) return '/projects'
     if (path.startsWith('/organizations')) return '/organizations'
+    if (path.startsWith('/approvals')) return '/approvals'
     if (path.startsWith('/settings')) return '/settings'
     return '/dashboard'
   }
@@ -166,7 +173,7 @@ const MainLayout = () => {
               <Space style={{ cursor: 'pointer' }}>
                 <Avatar
                   size="small"
-                  src={user?.avatar}
+                  src={user?.avatarUrl}
                   icon={<UserOutlined />}
                 />
                 <Text>{user?.nickname || user?.username}</Text>

@@ -47,7 +47,7 @@ const ProjectOverview = () => {
         taskApi.getTasks(projectId),
       ])
       setProject(projectData)
-      setTasks(tasksData.items)
+      setTasks(tasksData?.records ?? [])
     } catch (error: any) {
       message.error(error.message || '获取数据失败')
     } finally {
@@ -202,11 +202,11 @@ const ProjectOverview = () => {
                         >
                           {priorityConfig[task.priority as keyof typeof priorityConfig]?.label}
                         </Tag>
-                        {task.assignee && (
+                        {task.assigneeName && (
                           <Space size={4}>
-                            <Avatar size="small" src={task.assignee.avatar} icon={<UserOutlined />} />
+                            <Avatar size="small" src={task.assigneeAvatar} icon={<UserOutlined />} />
                             <Text type="secondary" style={{ fontSize: 12 }}>
-                              {task.assignee.nickname || task.assignee.username}
+                              {task.assigneeName}
                             </Text>
                           </Space>
                         )}

@@ -40,10 +40,11 @@ const OrganizationPage = () => {
   const fetchOrganizations = async () => {
     setLoading(true)
     try {
-      const response = await organizationApi.getOrganizations()
-      setOrganizations(response.items)
+      const list = await organizationApi.getOrganizations()
+      setOrganizations(list)
     } catch (error: any) {
       message.error(error.message || '获取组织列表失败')
+      setOrganizations([])
     } finally {
       setLoading(false)
     }

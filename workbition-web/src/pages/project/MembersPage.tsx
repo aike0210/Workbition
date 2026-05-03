@@ -101,12 +101,12 @@ const MembersPage = () => {
       key: 'user',
       render: (_: any, record: ProjectMember) => (
         <Space>
-          <Avatar src={record.user.avatar} icon={<UserOutlined />} />
+          <Avatar src={record.avatarUrl} icon={<UserOutlined />} />
           <div>
-            <Text strong>{record.user.nickname || record.user.username}</Text>
+            <Text strong>{record.nickname || record.username}</Text>
             <br />
             <Text type="secondary" style={{ fontSize: 12 }}>
-              {record.user.email}
+              {record.email}
             </Text>
           </div>
         </Space>

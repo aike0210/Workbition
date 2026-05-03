@@ -16,10 +16,12 @@ import {
   ProjectOutlined,
   TeamOutlined,
   SettingOutlined,
-  KanbanOutlined,
+  AppstoreOutlined,
   UnorderedListOutlined,
   CalendarOutlined,
   BarChartOutlined,
+  ApartmentOutlined,
+  ThunderboltOutlined,
 } from '@ant-design/icons'
 import { projectApi } from '@/api'
 import { Project } from '@/types'
@@ -59,6 +61,8 @@ const ProjectDetailPage = () => {
     if (path.includes('/calendar')) return 'calendar'
     if (path.includes('/gantt')) return 'gantt'
     if (path.includes('/members')) return 'members'
+    if (path.includes('/workflow')) return 'workflow'
+    if (path.includes('/automation')) return 'automation'
     if (path.includes('/settings')) return 'settings'
     return 'overview'
   }
@@ -83,6 +87,12 @@ const ProjectDetailPage = () => {
       case 'members':
         navigate(`/projects/${projectId}/members`)
         break
+      case 'workflow':
+        navigate(`/projects/${projectId}/workflow`)
+        break
+      case 'automation':
+        navigate(`/projects/${projectId}/automation`)
+        break
       case 'settings':
         navigate(`/projects/${projectId}/settings`)
         break
@@ -103,7 +113,7 @@ const ProjectDetailPage = () => {
       key: 'board',
       label: (
         <Space>
-          <KanbanOutlined />
+          <AppstoreOutlined />
           <span>看板</span>
         </Space>
       ),
@@ -141,6 +151,24 @@ const ProjectDetailPage = () => {
         <Space>
           <TeamOutlined />
           <span>成员</span>
+        </Space>
+      ),
+    },
+    {
+      key: 'workflow',
+      label: (
+        <Space>
+          <ApartmentOutlined />
+          <span>工作流</span>
+        </Space>
+      ),
+    },
+    {
+      key: 'automation',
+      label: (
+        <Space>
+          <ThunderboltOutlined />
+          <span>自动化</span>
         </Space>
       ),
     },
@@ -204,7 +232,7 @@ const ProjectDetailPage = () => {
               </Text>
               <Space style={{ marginTop: 12 }}>
                 <Text type="secondary">
-                  <TeamOutlined /> 5 成员
+                  <TeamOutlined /> {project.memberCount ?? 0} 成员
                 </Text>
                 <Text type="secondary">•</Text>
                 <Text type="secondary">

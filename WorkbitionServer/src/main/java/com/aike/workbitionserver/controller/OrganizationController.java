@@ -4,8 +4,6 @@ import com.aike.workbitionserver.common.result.Result;
 import com.aike.workbitionserver.dto.organization.*;
 import com.aike.workbitionserver.entity.User;
 import com.aike.workbitionserver.service.OrganizationService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,13 +14,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/organizations")
 @RequiredArgsConstructor
-@Tag(name = "组织管理", description = "组织相关接口")
 public class OrganizationController {
 
     private final OrganizationService organizationService;
 
     @PostMapping
-    @Operation(summary = "创建组织")
     public Result<OrganizationResponse> createOrganization(
             @AuthenticationPrincipal User user,
             @Valid @RequestBody CreateOrganizationRequest request) {
@@ -31,14 +27,12 @@ public class OrganizationController {
     }
 
     @GetMapping
-    @Operation(summary = "获取用户所属组织列表")
     public Result<List<OrganizationResponse>> getUserOrganizations(@AuthenticationPrincipal User user) {
         List<OrganizationResponse> organizations = organizationService.getUserOrganizations(user.getId());
         return Result.success(organizations);
     }
 
     @GetMapping("/{orgId}")
-    @Operation(summary = "获取组织详情")
     public Result<OrganizationResponse> getOrganization(
             @AuthenticationPrincipal User user,
             @PathVariable Long orgId) {
@@ -47,7 +41,6 @@ public class OrganizationController {
     }
 
     @PutMapping("/{orgId}")
-    @Operation(summary = "更新组织信息")
     public Result<OrganizationResponse> updateOrganization(
             @AuthenticationPrincipal User user,
             @PathVariable Long orgId,
@@ -57,7 +50,6 @@ public class OrganizationController {
     }
 
     @DeleteMapping("/{orgId}")
-    @Operation(summary = "删除组织")
     public Result<Void> deleteOrganization(
             @AuthenticationPrincipal User user,
             @PathVariable Long orgId) {
@@ -66,7 +58,6 @@ public class OrganizationController {
     }
 
     @PostMapping("/{orgId}/members")
-    @Operation(summary = "添加组织成员")
     public Result<OrgMemberResponse> addMember(
             @AuthenticationPrincipal User user,
             @PathVariable Long orgId,
@@ -76,7 +67,6 @@ public class OrganizationController {
     }
 
     @GetMapping("/{orgId}/members")
-    @Operation(summary = "获取组织成员列表")
     public Result<List<OrgMemberResponse>> getMembers(
             @AuthenticationPrincipal User user,
             @PathVariable Long orgId,
@@ -88,7 +78,6 @@ public class OrganizationController {
     }
 
     @PutMapping("/{orgId}/members/{userId}")
-    @Operation(summary = "变更成员角色")
     public Result<OrgMemberResponse> updateMemberRole(
             @AuthenticationPrincipal User user,
             @PathVariable Long orgId,
@@ -99,7 +88,6 @@ public class OrganizationController {
     }
 
     @DeleteMapping("/{orgId}/members/{userId}")
-    @Operation(summary = "移除组织成员")
     public Result<Void> removeMember(
             @AuthenticationPrincipal User user,
             @PathVariable Long orgId,

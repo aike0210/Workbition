@@ -264,10 +264,10 @@ const TaskDetailDrawer = ({ visible, taskId, onClose, onUpdate, onDelete }: Task
                 <div>
                   <Text type="secondary">负责人</Text>
                   <div style={{ marginTop: 4 }}>
-                    {task?.assignee ? (
+                    {task?.assigneeName ? (
                       <Space>
-                        <Avatar size="small" src={task.assignee.avatar} icon={<UserOutlined />} />
-                        <Text>{task.assignee.nickname || task.assignee.username}</Text>
+                        <Avatar size="small" src={task.assigneeAvatar} icon={<UserOutlined />} />
+                        <Text>{task.assigneeName}</Text>
                       </Space>
                     ) : (
                       <Text type="secondary">未分配</Text>
@@ -407,7 +407,7 @@ const TaskDetailDrawer = ({ visible, taskId, onClose, onUpdate, onDelete }: Task
               >
                 <List.Item.Meta
                   avatar={
-                    <Avatar src={comment.user.avatar} icon={<UserOutlined />} />
+                    <Avatar src={comment.user.avatarUrl} icon={<UserOutlined />} />
                   }
                   title={
                     <Space>
@@ -440,7 +440,7 @@ const TaskDetailDrawer = ({ visible, taskId, onClose, onUpdate, onDelete }: Task
             <List.Item>
               <List.Item.Meta
                 avatar={
-                  <Avatar src={activity.user.avatar} icon={<UserOutlined />} size="small" />
+                  <Avatar src={activity.user.avatarUrl} icon={<UserOutlined />} size="small" />
                 }
                 title={
                   <Space>

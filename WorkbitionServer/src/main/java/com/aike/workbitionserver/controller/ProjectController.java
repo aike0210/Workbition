@@ -4,8 +4,6 @@ import com.aike.workbitionserver.common.result.Result;
 import com.aike.workbitionserver.dto.project.*;
 import com.aike.workbitionserver.entity.User;
 import com.aike.workbitionserver.service.ProjectService;
-import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -16,13 +14,11 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/v1/projects")
 @RequiredArgsConstructor
-@Tag(name = "项目管理", description = "项目相关接口")
 public class ProjectController {
 
     private final ProjectService projectService;
 
     @PostMapping
-    @Operation(summary = "创建项目")
     public Result<ProjectResponse> createProject(
             @AuthenticationPrincipal User user,
             @Valid @RequestBody CreateProjectRequest request) {
@@ -31,7 +27,6 @@ public class ProjectController {
     }
 
     @GetMapping
-    @Operation(summary = "获取项目列表")
     public Result<List<ProjectResponse>> getProjects(
             @AuthenticationPrincipal User user,
             @RequestParam(required = false) Long orgId,
@@ -43,7 +38,6 @@ public class ProjectController {
     }
 
     @GetMapping("/{projectId}")
-    @Operation(summary = "获取项目详情")
     public Result<ProjectResponse> getProject(
             @AuthenticationPrincipal User user,
             @PathVariable Long projectId) {
@@ -52,7 +46,6 @@ public class ProjectController {
     }
 
     @PutMapping("/{projectId}")
-    @Operation(summary = "更新项目信息")
     public Result<ProjectResponse> updateProject(
             @AuthenticationPrincipal User user,
             @PathVariable Long projectId,
@@ -62,7 +55,6 @@ public class ProjectController {
     }
 
     @DeleteMapping("/{projectId}")
-    @Operation(summary = "删除项目")
     public Result<Void> deleteProject(
             @AuthenticationPrincipal User user,
             @PathVariable Long projectId) {
@@ -71,7 +63,6 @@ public class ProjectController {
     }
 
     @PostMapping("/{projectId}/archive")
-    @Operation(summary = "归档项目")
     public Result<Void> archiveProject(
             @AuthenticationPrincipal User user,
             @PathVariable Long projectId) {
@@ -80,7 +71,6 @@ public class ProjectController {
     }
 
     @GetMapping("/{projectId}/members")
-    @Operation(summary = "获取项目成员列表")
     public Result<List<ProjectMemberResponse>> getProjectMembers(
             @AuthenticationPrincipal User user,
             @PathVariable Long projectId) {
@@ -89,7 +79,6 @@ public class ProjectController {
     }
 
     @PostMapping("/{projectId}/members")
-    @Operation(summary = "添加项目成员")
     public Result<ProjectMemberResponse> addProjectMember(
             @AuthenticationPrincipal User user,
             @PathVariable Long projectId,
@@ -100,7 +89,6 @@ public class ProjectController {
     }
 
     @DeleteMapping("/{projectId}/members/{userId}")
-    @Operation(summary = "移除项目成员")
     public Result<Void> removeProjectMember(
             @AuthenticationPrincipal User user,
             @PathVariable Long projectId,

@@ -36,8 +36,8 @@ apiClient.interceptors.response.use(
     }
 
     // Handle business errors
-    const error = new Error(data.message || '请求失败')
-    return Promise.reject(error)
+    const err = new Error(data.message || '请求失败')
+    return Promise.reject(err)
   },
   async (error) => {
     const originalRequest = error.config
@@ -47,17 +47,18 @@ apiClient.interceptors.response.use(
       originalRequest._retry = true
 
       try {
-        const refreshToken = localStorage.getItem('refreshToken')
+        const authState = useAuthStore.getState()
+        const refreshToken = authState.token // TODO: store refreshToken separately
         if (refreshToken) {
           const response = await axios.post('/api/v1/auth/refresh', {
             refreshToken,
           })
 
-          const { token } = response.data.data
-          useAuthStore.getState().setToken(token)
+          const { accessToken } = response.data.data
+          useAuthStore.getState().setToken(accessToken)
 
           // Retry the original request
-          originalRequest.headers.Authorization = `Bearer ${token}`
+          originalRequest.headers.Authorization = `Bearer ${accessToken}`
           return apiClient(originalRequest)
         }
       } catch (refreshError) {
@@ -69,8 +70,8 @@ apiClient.interceptors.response.use(
     }
 
     // Handle other errors
-    const message = error.response?.data?.message || error.message || '网络错误'
-    return Promise.reject(new Error(message))
+    const msg = error.response?.data?.message || error.message || '网络错误'
+    return Promise.reject(new Error(msg))
   }
 )
 

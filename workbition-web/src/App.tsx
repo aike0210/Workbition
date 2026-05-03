@@ -9,6 +9,7 @@ import ProjectListPage from './pages/project/ProjectListPage'
 import ProjectRoutes from './pages/project/ProjectRoutes'
 import OrganizationPage from './pages/organization/OrganizationPage'
 import NotificationsPage from './pages/notification/NotificationsPage'
+import ApprovalListPage from './pages/workflow/ApprovalListPage'
 import SettingsPage from './pages/settings/SettingsPage'
 import NotFoundPage from './pages/NotFoundPage'
 import { useAuthStore } from './stores/authStore'
@@ -43,6 +44,7 @@ function App() {
             <Route path="projects/:projectId/*" element={<ProjectRoutes />} />
             <Route path="organizations" element={<OrganizationPage />} />
             <Route path="notifications" element={<NotificationsPage />} />
+            <Route path="approvals" element={<ApprovalListPage />} />
             <Route path="settings" element={<SettingsPage />} />
           </Route>
 

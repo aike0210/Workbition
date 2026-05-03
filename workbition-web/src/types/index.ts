@@ -1,17 +1,18 @@
-// User types
+// User types - matches backend UserResponse
 export interface User {
-  id: string
+  id: number
   username: string
   email: string
-  avatar?: string
-  nickname?: string
   phone?: string
+  nickname?: string
+  avatarUrl?: string
+  status: number
+  lastLoginAt?: string
   createdAt: string
-  updatedAt: string
 }
 
 export interface LoginRequest {
-  username: string
+  emailOrUsername: string
   password: string
 }
 
@@ -19,92 +20,113 @@ export interface RegisterRequest {
   username: string
   email: string
   password: string
-  confirmPassword: string
 }
 
-export interface AuthResponse {
-  user: User
-  token: string
+export interface TokenResponse {
+  accessToken: string
   refreshToken: string
+  tokenType: string
+  expiresIn: number
 }
 
 // Organization types
 export interface Organization {
-  id: string
+  id: number
   name: string
-  logo?: string
+  logoUrl?: string
   description?: string
-  ownerId: string
+  ownerId: number
+  status?: number
+  memberCount?: number
   createdAt: string
-  updatedAt: string
 }
 
 export interface OrganizationMember {
-  id: string
-  userId: string
-  organizationId: string
-  role: OrganizationRole
-  user: User
+  id: number
+  userId: number
+  orgId: number
+  role: string
+  username?: string
+  nickname?: string
+  avatarUrl?: string
+  email?: string
   joinedAt: string
 }
 
-export type OrganizationRole = 'owner' | 'admin' | 'member'
-
-// Project types
+// Project types - matches backend ProjectResponse
 export interface Project {
-  id: string
+  id: number
+  orgId: number
   name: string
   description?: string
-  organizationId: string
-  visibility: 'public' | 'private'
-  template?: string
+  icon?: string
+  color?: string
+  visibility: string
+  status?: string
+  startDate?: string
+  endDate?: string
+  creatorId?: number
+  creatorUsername?: string
+  memberCount?: number
+  currentUserRole?: string
   createdAt: string
-  updatedAt: string
 }
 
 export interface ProjectMember {
-  id: string
-  userId: string
-  projectId: string
-  role: ProjectRole
-  user: User
+  id: number
+  userId: number
+  projectId: number
+  role: string
+  user?: User
+  username?: string
+  nickname?: string
+  avatarUrl?: string
   joinedAt: string
 }
 
 export type ProjectRole = 'owner' | 'admin' | 'member' | 'viewer'
 
-// Task types
+// Task types - matches backend TaskListResponse / TaskResponse
 export interface TaskList {
-  id: string
-  projectId: string
+  id: number
+  projectId: number
   name: string
   position: number
+  taskCount?: number
   createdAt: string
-  updatedAt: string
 }
 
 export interface Task {
-  id: string
-  taskListId: string
+  id: number
+  projectId: number
+  taskListId?: number
+  parentTaskId?: number
   title: string
   description?: string
-  status: TaskStatus
-  priority: TaskPriority
-  assigneeId?: string
-  assignee?: User
+  status: string
+  priority: string
+  assigneeId?: number
+  assigneeName?: string
+  assigneeAvatar?: string
+  creatorId?: number
+  creatorName?: string
+  startDate?: string
   dueDate?: string
-  tags: string[]
-  position: number
+  completedAt?: string
+  position?: number
+  isMilestone?: number
+  tags?: string
+  subtaskCount?: number
+  completedSubtaskCount?: number
+  commentCount?: number
+  attachmentCount?: number
   createdAt: string
-  updatedAt: string
+  updatedAt?: string
 }
 
-export type TaskStatus = 'todo' | 'in_progress' | 'done' | 'custom'
-export type TaskPriority = 'urgent' | 'high' | 'medium' | 'low'
-
 export interface Subtask {
-  id: string
-  parentTaskId: string
+  id: number
+  parentTaskId: number
   title: string
   completed: boolean
   position: number
@@ -113,18 +135,18 @@ export interface Subtask {
 }
 
 export interface Comment {
-  id: string
-  taskId: string
-  userId: string
+  id: number
+  taskId: number
+  userId: number
   user: User
   content: string
   createdAt: string
-  updatedAt: string
+  updatedAt?: string
 }
 
 export interface Attachment {
-  id: string
-  taskId: string
+  id: number
+  taskId: number
   fileName: string
   fileUrl: string
   fileSize: number
@@ -134,10 +156,10 @@ export interface Attachment {
 }
 
 export interface Activity {
-  id: string
-  projectId: string
-  taskId?: string
-  userId: string
+  id: number
+  projectId: number
+  taskId?: number
+  userId: number
   user: User
   action: string
   details?: Record<string, any>
@@ -211,12 +233,13 @@ export interface ApiResponse<T> {
   data: T
 }
 
+// Matches MyBatis-Plus Page response
 export interface PaginatedResponse<T> {
-  items: T[]
+  records: T[]
   total: number
-  page: number
-  pageSize: number
-  totalPages: number
+  size: number
+  current: number
+  pages: number
 }
 
 export interface PaginationParams {

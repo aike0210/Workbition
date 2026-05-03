@@ -52,10 +52,11 @@ const ProjectListPage = () => {
   const fetchProjects = async () => {
     setLoading(true)
     try {
-      const response = await projectApi.getProjects()
-      setProjects(response.items)
+      const list = await projectApi.getProjects()
+      setProjects(list)
     } catch (error: any) {
       message.error(error.message || '获取项目列表失败')
+      setProjects([])
     } finally {
       setLoading(false)
     }
@@ -64,7 +65,12 @@ const ProjectListPage = () => {
   // Create project
   const handleCreateProject = async (values: any) => {
     try {
-      await projectApi.createProject(values)
+      await projectApi.createProject({
+        orgId: values.orgId,
+        name: values.name,
+        description: values.description,
+        visibility: values.visibility,
+      })
       message.success('项目创建成功')
       setCreateModalVisible(false)
       createForm.resetFields()
@@ -75,7 +81,7 @@ const ProjectListPage = () => {
   }
 
   // Delete project
-  const handleDeleteProject = async (projectId: string) => {
+  const handleDeleteProject = async (projectId: number) => {
     Modal.confirm({
       title: '确认删除',
       content: '删除后项目将无法恢复，确定要删除吗？',
@@ -237,7 +243,7 @@ const ProjectListPage = () => {
                   <div style={{ marginTop: 16 }}>
                     <Space>
                       <TeamOutlined />
-                      <Text type="secondary">5 成员</Text>
+                      <Text type="secondary">{project.memberCount ?? 0} 成员</Text>
                     </Space>
                   </div>
                 </Card>
@@ -263,6 +269,14 @@ const ProjectListPage = () => {
           layout="vertical"
           onFinish={handleCreateProject}
         >
+          <Form.Item
+            name="orgId"
+            label="所属组织"
+            rules={[{ required: true, message: '请输入组织ID' }]}
+          >
+            <Input type="number" placeholder="输入组织ID" />
+          </Form.Item>
+
           <Form.Item
             name="name"
             label="项目名称"

@@ -59,7 +59,7 @@ const ListViewPage = () => {
     setLoading(true)
     try {
       const response = await taskApi.getTasks(projectId)
-      setTasks(response.items)
+      setTasks(response?.records ?? [])
     } catch (error: any) {
       message.error(error.message || '获取任务列表失败')
     } finally {
@@ -149,14 +149,13 @@ const ListViewPage = () => {
     },
     {
       title: '负责人',
-      dataIndex: 'assignee',
       key: 'assignee',
       width: 120,
-      render: (assignee) =>
-        assignee ? (
+      render: (_: any, record: Task) =>
+        record.assigneeName ? (
           <Space>
-            <Avatar size="small" src={assignee.avatar} icon={<UserOutlined />} />
-            <Text>{assignee.nickname || assignee.username}</Text>
+            <Avatar size="small" src={record.assigneeAvatar} icon={<UserOutlined />} />
+            <Text>{record.assigneeName}</Text>
           </Space>
         ) : (
           <Text type="secondary">未分配</Text>

@@ -64,8 +64,8 @@ const BoardViewPage = () => {
         taskApi.getTaskLists(projectId),
         taskApi.getTasks(projectId),
       ])
-      setTaskLists(listsData)
-      setTasks(tasksData.items)
+      setTaskLists(listsData ?? [])
+      setTasks(tasksData?.records ?? [])
     } catch (error: any) {
       message.error(error.message || '获取数据失败')
     } finally {
@@ -102,8 +102,8 @@ const BoardViewPage = () => {
     const { active, over } = event
     if (!over) return
 
-    const activeId = active.id as string
-    const overId = over.id as string
+    const activeId = Number(active.id)
+    const overId = Number(over.id)
 
     const activeTask = tasks.find((t) => t.id === activeId)
     const overTask = tasks.find((t) => t.id === overId)
@@ -147,8 +147,8 @@ const BoardViewPage = () => {
 
     if (!over) return
 
-    const activeId = active.id as string
-    const overId = over.id as string
+    const activeId = Number(active.id)
+    const overId = Number(over.id)
 
     if (activeId === overId) return
 

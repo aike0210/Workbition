@@ -4,24 +4,43 @@ import { Form, Input, Button, Card, Typography, message, Divider, Space } from '
 import { UserOutlined, LockOutlined, GithubOutlined, GoogleOutlined } from '@ant-design/icons'
 import { useAuthStore } from '@/stores/authStore'
 import { authApi } from '@/api'
-import { LoginRequest } from '@/types'
 
 const { Title, Text } = Typography
+
+interface LoginFormValues {
+  emailOrUsername: string
+  password: string
+}
 
 const LoginPage = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
-  const { login } = useAuthStore()
+  const { login, setToken } = useAuthStore()
 
-  const onFinish = async (values: LoginRequest) => {
+  const onFinish = async (values: LoginFormValues) => {
     setLoading(true)
     try {
-      const response = await authApi.login(values)
-      login(response.user, response.token)
+      // Step 1: Get tokens from backend
+      const tokenResponse = await authApi.login(values)
+      setToken(tokenResponse.accessToken)
+
+      // Step 2: Fetch current user info
+      const user = await authApi.getCurrentUser()
+      login(user, tokenResponse.accessToken)
+
       message.success('登录成功')
       navigate('/dashboard')
     } catch (error: any) {
-      message.error(error.message || '登录失败')
+      const status = error.response?.status
+      if (status === 404) {
+        message.error('登录服务暂不可用，请确认后端服务已启动')
+      } else if (status === 401) {
+        message.error('用户名或密码错误')
+      } else if (status === 400) {
+        message.error(error.response?.data?.message || '请求参数错误')
+      } else {
+        message.error(error.message || '登录失败，请稍后重试')
+      }
     } finally {
       setLoading(false)
     }
@@ -59,7 +78,7 @@ const LoginPage = () => {
           layout="vertical"
         >
           <Form.Item
-            name="username"
+            name="emailOrUsername"
             rules={[{ required: true, message: '请输入用户名或邮箱' }]}
           >
             <Input

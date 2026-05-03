@@ -2,26 +2,37 @@ import { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Form, Input, Button, Card, Typography, message, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons'
-import { useAuthStore } from '@/stores/authStore'
 import { authApi } from '@/api'
-import { RegisterRequest } from '@/types'
 
 const { Title, Text } = Typography
+
+interface RegisterFormValues {
+  username: string
+  email: string
+  password: string
+  confirmPassword: string
+}
 
 const RegisterPage = () => {
   const [loading, setLoading] = useState(false)
   const navigate = useNavigate()
-  const { login } = useAuthStore()
 
-  const onFinish = async (values: RegisterRequest) => {
+  const onFinish = async (values: RegisterFormValues) => {
     setLoading(true)
     try {
-      const response = await authApi.register(values)
-      login(response.user, response.token)
-      message.success('注册成功')
-      navigate('/dashboard')
+      const { confirmPassword, ...registerData } = values
+      await authApi.register(registerData)
+      message.success('注册成功，请登录')
+      navigate('/login')
     } catch (error: any) {
-      message.error(error.message || '注册失败')
+      const status = error.response?.status
+      if (status === 409) {
+        message.error('用户名或邮箱已存在')
+      } else if (status === 400) {
+        message.error(error.response?.data?.message || '请求参数错误')
+      } else {
+        message.error(error.message || '注册失败，请稍后重试')
+      }
     } finally {
       setLoading(false)
     }

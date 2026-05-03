@@ -43,7 +43,8 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-aop</artifactId>
-            <version>4.0.6</version>
+            <version>4.0.0-M2</version>
+            <scope>compile</scope>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -134,11 +135,14 @@
         </dependency>
 
         <!-- ==================== API Documentation ==================== -->
+        <!-- Knife4j 暂不兼容 Spring Boot 4.x / Spring Framework 7.x，等官方适配后再启用 -->
+        <!--
         <dependency>
             <groupId>com.github.xiaoymin</groupId>
             <artifactId>knife4j-openapi3-jakarta-spring-boot-starter</artifactId>
             <version>${knife4j.version}</version>
         </dependency>
+        -->
 
         <!-- ==================== Utilities ==================== -->
         <dependency>
