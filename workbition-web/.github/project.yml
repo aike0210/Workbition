@@ -1,0 +1,27 @@
+# Configuration for project automation - https://github.com/marketplace/actions/project-automation
+
+# Name of the project
+name: Workbition Development
+
+# ID of the project (get from project URL)
+# project_id: 123456
+
+# Repository to use
+# repository: workbition/workbition-web
+
+# Column to add issues to when they are opened
+# columns:
+#   - name: To do
+#     id: 123456
+#   - name: In progress
+#     id: 123457
+#   - name: Done
+#     id: 123458
+
+# Labels to add to issues when they are added to the project
+# labels:
+#   - project-card
+
+# Milestones to add to issues when they are added to the project
+# milestones:
+#   - v1.0.0

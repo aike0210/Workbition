@@ -1,0 +1,14 @@
+# These owners will be automatically requested for review
+# when someone opens a pull request.
+#
+# Global rule:
+*       @workbition-team
+
+# Frontend specific
+/src/   @workbition/frontend-team
+/public/ @workbition/frontend-team
+
+# Configuration files
+*.json  @workbition/devops
+*.yml   @workbition/devops
+*.yaml  @workbition/devops

@@ -1,0 +1,11 @@
+# Configuration for welcome - https://github.com/marketplace/actions/first-interaction
+
+# Comment to post on first-time issues
+issueComment: >
+  👋 Welcome to Workbition! Thank you for your first issue.
+  We'll review it as soon as possible.
+
+# Comment to post on first-time pull requests
+prComment: >
+  👋 Welcome to Workbition! Thank you for your first pull request.
+  We'll review it as soon as possible.

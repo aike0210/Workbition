@@ -1,0 +1,41 @@
+# Configuration for labeler - https://github.com/actions/labeler
+
+# Add 'frontend' label to any changes in src/ directory
+frontend:
+  - src/**/*
+
+# Add 'backend' label to any changes in server/ directory
+backend:
+  - server/**/*
+
+# Add 'documentation' label to any changes in docs/ directory
+documentation:
+  - docs/**/*
+
+# Add 'dependencies' label to any changes in package.json or package-lock.json
+dependencies:
+  - package.json
+  - package-lock.json
+
+# Add 'ci' label to any changes in .github/ directory
+ci:
+  - .github/**/*
+
+# Add 'config' label to any changes in configuration files
+config:
+  - '*.json'
+  - '*.yml'
+  - '*.yaml'
+  - '*.config.*'
+
+# Add 'tests' label to any changes in test files
+tests:
+  - '**/*.test.*'
+  - '**/*.spec.*'
+  - '__tests__/**/*'
+
+# Add 'styles' label to any changes in style files
+styles:
+  - '**/*.css'
+  - '**/*.scss'
+  - '**/*.less'

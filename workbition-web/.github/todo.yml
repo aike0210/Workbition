@@ -1,0 +1,35 @@
+# Configuration for todo - https://github.com/marketplace/actions/todo
+
+# Labels to add to issues created from TODO comments
+# labels:
+#   - todo
+
+# Prefix for issue titles
+# titlePrefix: '[TODO]'
+
+# Template for issue body
+# bodyTemplate: |
+#   ## TODO
+#
+#   {{ todo }}
+#
+#   **File:** {{ file }}
+#   **Line:** {{ line }}
+#   **Author:** {{ author }}
+#   **Date:** {{ date }}
+
+# Keywords to search for
+keywords:
+  - 'TODO'
+  - 'FIXME'
+  - 'HACK'
+  - 'XXX'
+
+# Whether to create issues from TODO comments in pull requests
+# createIssues: true
+
+# Whether to add labels to issues
+# addLabels: true
+
+# Whether to assign issues to the author
+# assignToAuthor: true

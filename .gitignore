@@ -1,0 +1,49 @@
+# ==================== Java / Spring Boot ====================
+WorkbitionServer/target/
+WorkbitionServer/.mvn/wrapper/maven-wrapper.jar
+WorkbitionServer/.idea/
+WorkbitionServer/*.iws
+WorkbitionServer/*.iml
+WorkbitionServer/*.ipr
+WorkbitionServer/.apt_generated
+WorkbitionServer/.classpath
+WorkbitionServer/.factorypath
+WorkbitionServer/.project
+WorkbitionServer/.settings
+WorkbitionServer/.springBeans
+WorkbitionServer/.sts4-cache
+WorkbitionServer/HELP.md
+
+# ==================== Node / React ====================
+workbition-web/node_modules/
+workbition-web/dist/
+workbition-web/build/
+workbition-web/.vite/
+workbition-web/*.tsbuildinfo
+workbition-web/coverage/
+
+# ==================== Environment ====================
+.env.local
+.env.*.local
+
+# ==================== IDE ====================
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# ==================== OS ====================
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ==================== Scripts ====================
+publish-to-github.bat
+
+# ==================== Logs ====================
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
