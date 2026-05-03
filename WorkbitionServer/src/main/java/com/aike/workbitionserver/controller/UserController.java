@@ -41,6 +41,6 @@ public class UserController {
     public Result<Void> changePassword(@AuthenticationPrincipal User user,
                                        @Valid @RequestBody ChangePasswordRequest request) {
         userService.changePassword(user.getId(), request);
-        return Result.success();
+        return Result.success("密码修改成功", null);
     }
 }
